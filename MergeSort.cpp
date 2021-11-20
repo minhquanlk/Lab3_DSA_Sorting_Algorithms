@@ -1,4 +1,4 @@
-﻿
+#include "Header.h"
 // ghép 2 phần con sau khi tách
 void merge(int* arr, int left, int midIndex, int right, unsigned long long& countcmp)
 {
