@@ -16,10 +16,12 @@ using namespace std;
 string data_order[] = {"DataNearlySorted","DataRandom","DataReverse","DataSorted"};
 int data_size[7] = {10000,30000,50000,100000,300000,500000};
 int arr[500005],n;
-int readInput(int a[],int nSize,const char *filename){
+int readInput(int a[],int nSize,const char *filename)
+{
     fstream inputFile ;
     inputFile.open(filename,ios::in);
-    if(!inputFile.is_open()){
+    if(!inputFile.is_open())
+    {
         return -1;
     }
     int i = 0 ;
@@ -29,7 +31,7 @@ int readInput(int a[],int nSize,const char *filename){
         i++;
     }
     return 1 ;
-   inputFile.close();
+    inputFile.close();
 }
 void swapping(int &x, int &y)
 {
@@ -42,33 +44,28 @@ void swapping(int &x, int &y)
 void heapify(int a[], int n, int i,unsigned long long &countcmp)
 {
     int largest = i,l = 2 * i + 1,r = 2 * i + 2;
-    if (l < n && a[l] > a[largest])
+    if (++countcmp && l < n && a[l] > a[largest])
     {
-        countcmp++;
         largest = l;
     }
-    if (r < n && a[r] > a[largest])
+    if (++countcmp && r < n && a[r] > a[largest])
     {
-        countcmp = countcmp + 2 ;
         largest = r;
     }
-    if (largest != i)
+    if (++countcmp && largest != i)
     {
-        countcmp = countcmp + 2 ;
         swap(a[i],a[largest]);
         heapify(a, n, largest,countcmp);
     }
 }
 void heapSort(int a[], int n,unsigned long long &countcmp)
 {
-    for (int i = n / 2 - 1; i >= 0; i--)
+    for (int i = n / 2 - 1;++countcmp && i >= 0; i--)
     {
-        countcmp++;
         heapify(a, n, i,countcmp);
     }
-    for (int i = n - 1; i >= 0; i--)
+    for (int i = n - 1; ++countcmp && i >= 0; i--)
     {
-        countcmp++;
         swapping(a[0],a[i]);
         heapify(a, i, 0,countcmp);
     }
@@ -79,16 +76,14 @@ void heapSort(int a[], int n,unsigned long long &countcmp)
 void ShakerSort(int a[], int n,unsigned long long &countcmp)
 {
     int i, j, k;
-    for(i = 0; i < n;)
+    for(i = 0; ++countcmp && i < n;)
     {
-        countcmp++;
         // First phase for ascending highest value to the highest unsorted index.
-        for(j = i+1; j < n; j++)
+        for(j = i+1;++countcmp && j < n; j++)
         {
-            countcmp++;
-            if(a[j] < a[j-1])
+
+            if(++countcmp && a[j] < a[j-1])
             {
-                countcmp++;
                 swapping(a[j], a[j-1]);
             }
         }
@@ -96,12 +91,10 @@ void ShakerSort(int a[], int n,unsigned long long &countcmp)
         n--;
 
         // Second phase for descending lowest value to the lowest unsorted index.
-        for(k = n-1; k > i; k--)
+        for(k = n-1; ++countcmp && k > i; k--)
         {
-            countcmp++;
-            if(a[k] < a[k-1])
+            if(++countcmp && a[k] < a[k-1])
             {
-                countcmp++;
                 swapping(a[k], a[k-1]);
             }
         }
@@ -113,18 +106,17 @@ void ShakerSort(int a[], int n,unsigned long long &countcmp)
 void shellSort(int a[], int n,unsigned long long &countcmp)
 {
     int gap, j, k;
-    for(gap = n/2; gap > 0; gap = gap / 2)          //initially gap = n/2,decreasing by gap /2
+    for(gap = n/2; ++countcmp && gap > 0; gap = gap / 2)          //initially gap = n/2,decreasing by gap /2
     {
-        countcmp++;
-        for(j = gap; j<n; j++)
+
+        for(j = gap;++countcmp && j<n; j++)
         {
-            countcmp++;
-            for(k = j-gap; k>=0; k -= gap)
+
+            for(k = j-gap;++countcmp && k>=0; k -= gap)
             {
-                countcmp++;
-                if(a[k+gap] >= a[k])
+                if(++countcmp && a[k+gap] >= a[k])
                 {
-                    countcmp++;
+
                     break;
                 }
                 else
@@ -156,25 +148,28 @@ void testing_sorted()
             memset(arr,0,sizeof(arr));
             n = data_size[j];
             string file_csv = data_order[i]+"_"+ to_string(data_size[j])+".txt";
-           // cout << file_csv << endl;
+            // cout << file_csv << endl;
             readInput(arr,n,file_csv.c_str());
-            for(int k = 0 ; k < 1 ;k++)
+            for(int k = 0 ; k < 3 ; k++)
             {
                 unsigned long long countcmp = 0 ;
                 string message = file_csv + " with algorithm " + abc(k);
-                if(k==0){
+                if(k==0)
+                {
                     INIT_TIMER;
                     START_TIMER;
                     heapSort(arr,n,countcmp);
                     STOP_TIMER(message + " and countcmp: " + to_string(countcmp));
                 }
-                else if(k==1){
+                else if(k==1)
+                {
                     INIT_TIMER;
                     START_TIMER;
                     ShakerSort(arr,n,countcmp);
                     STOP_TIMER(message + " and countcmp: " + to_string(countcmp));
                 }
-                else{
+                else
+                {
                     INIT_TIMER;
                     START_TIMER;
                     shellSort(arr,n,countcmp);
@@ -188,7 +183,7 @@ void testing_sorted()
 }
 void printArr(int arr[],int n)
 {
-    for(int i = 0 ; i < n;i++)
+    for(int i = 0 ; i < n; i++)
         cout << arr[i] << " ";
     cout << endl;
 }
