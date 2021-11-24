@@ -1,4 +1,3 @@
-#include "Header.h"
 // ghép 2 phần con sau khi tách
 void merge(int* arr, int left, int midIndex, int right, unsigned long long& countcmp)
 {
@@ -53,11 +52,4 @@ void mergeSort(int* arr, int left, int right, unsigned long long& countcmp)
 		mergeSort(arr, midIndex + 1, right, countcmp);
 		merge(arr, left, midIndex, right, countcmp);	// Ghép 2 mảng con
 	}
-}
-void printArray(int A[], int size)
-{
-	int i;
-	for (i = 0; i < size; i++)
-		cout << A[i] << " ";
-
 }
