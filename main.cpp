@@ -49,12 +49,12 @@ void heapify(int a[], int n, int i,unsigned long long &countcmp)
     }
     if (r < n && a[r] > a[largest])
     {
-        countcmp++;
+        countcmp = countcmp + 2 ;
         largest = r;
     }
     if (largest != i)
     {
-        countcmp++;
+        countcmp = countcmp + 2 ;
         swap(a[i],a[largest]);
         heapify(a, n, largest,countcmp);
     }
@@ -158,7 +158,7 @@ void testing_sorted()
             string file_csv = data_order[i]+"_"+ to_string(data_size[j])+".txt";
            // cout << file_csv << endl;
             readInput(arr,n,file_csv.c_str());
-            for(int k = 0 ; k < 3 ;k++)
+            for(int k = 0 ; k < 1 ;k++)
             {
                 unsigned long long countcmp = 0 ;
                 string message = file_csv + " with algorithm " + abc(k);
