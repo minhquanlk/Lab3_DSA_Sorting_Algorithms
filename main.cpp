@@ -72,13 +72,12 @@ void heapSort(int a[], int n,unsigned long long &countcmp)
 }
 
 /* source : https://www.sanfoundry.com/cplusplus-program-perform-shaker-sort/ */
-// A function implementing shaker sort.
 void ShakerSort(int a[], int n,unsigned long long &countcmp)
 {
     int i, j, k;
     for(i = 0; ++countcmp && i < n;)
     {
-        // First phase for ascending highest value to the highest unsorted index.
+        // tìm phần tử nhỏ nhất cho về đầu dãy
         for(j = i+1;++countcmp && j < n; j++)
         {
 
@@ -87,10 +86,10 @@ void ShakerSort(int a[], int n,unsigned long long &countcmp)
                 swapping(a[j], a[j-1]);
             }
         }
-        // Decrementing highest index.
+        // giảm n
         n--;
 
-        // Second phase for descending lowest value to the lowest unsorted index.
+        // tìm phần tử lớn nhất cho về đầu dãy
         for(k = n-1; ++countcmp && k > i; k--)
         {
             if(++countcmp && a[k] < a[k-1])
@@ -98,7 +97,7 @@ void ShakerSort(int a[], int n,unsigned long long &countcmp)
                 swapping(a[k], a[k-1]);
             }
         }
-        // Incrementing lowest index.
+        // tang i
         i++;
     }
 }
@@ -106,7 +105,7 @@ void ShakerSort(int a[], int n,unsigned long long &countcmp)
 void shellSort(int a[], int n,unsigned long long &countcmp)
 {
     int gap, j, k;
-    for(gap = n/2; ++countcmp && gap > 0; gap = gap / 2)          //initially gap = n/2,decreasing by gap /2
+    for(gap = n/2; ++countcmp && gap > 0; gap = gap / 2)          //h = n/2 , sau đó h = h/2
     {
 
         for(j = gap;++countcmp && j<n; j++)
