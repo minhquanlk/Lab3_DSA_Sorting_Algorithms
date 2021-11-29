@@ -41,9 +41,12 @@ void swapping(int &x, int &y)
     y = temp;
 }
 /* source : https://www.tutorialspoint.com/cplusplus-program-to-sort-an-array-of-10-elements-using-heap-sort-algorithm */
+// xây dựng heap thỏa tính chất cây nhị phân đầy đủ a[i] >= a[2*i+1] , a[2*i+2] với i là nút gốc
 void heapify(int a[], int n, int i,unsigned long long &countcmp)
 {
-    int largest = i,l = 2 * i + 1,r = 2 * i + 2;
+    int largest = i,l = 2 * i + 1,r = 2 * i + 2; // i là nút gốc , l là nút con bên trái , r là nút con bên phải
+
+    // nếu nút gốc bé hơn nút con thì t cho nút gốc bằng nút con
     if (++countcmp && l < n && a[l] > a[largest])
     {
         largest = l;
@@ -52,6 +55,7 @@ void heapify(int a[], int n, int i,unsigned long long &countcmp)
     {
         largest = r;
     }
+    // kiểm tra nút gốc đã thay đổi thì t swap  giá trị
     if (++countcmp && largest != i)
     {
         swap(a[i],a[largest]);
@@ -60,10 +64,12 @@ void heapify(int a[], int n, int i,unsigned long long &countcmp)
 }
 void heapSort(int a[], int n,unsigned long long &countcmp)
 {
+    // xây dựng heap từ mảng
     for (int i = n / 2 - 1;++countcmp && i >= 0; i--)
     {
         heapify(a, n, i,countcmp);
     }
+    // sắp xếp lại mảng đã được xây dựng heap
     for (int i = n - 1; ++countcmp && i >= 0; i--)
     {
         swapping(a[0],a[i]);
@@ -105,7 +111,7 @@ void ShakerSort(int a[], int n,unsigned long long &countcmp)
 void shellSort(int a[], int n,unsigned long long &countcmp)
 {
     int gap, j, k;
-    for(gap = n/2; ++countcmp && gap > 0; gap = gap / 2)          //h = n/2 , sau đó h = h/2
+    for(gap = n/2; ++countcmp && gap > 0; gap = gap / 2)          //gap = n/2 , sau đó gap = h/2
     {
 
         for(j = gap;++countcmp && j<n; j++)
