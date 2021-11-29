@@ -77,35 +77,37 @@ void heapSort(int a[], int n,unsigned long long &countcmp)
     }
 }
 
-/* source : https://www.sanfoundry.com/cplusplus-program-perform-shaker-sort/ */
-void ShakerSort(int a[], int n,unsigned long long &countcmp)
+
+void shakerSort1(int a[], int n,unsigned long long &countcmp)
 {
-    int i, j, k;
-    for(i = 0; ++countcmp && i < n;)
-    {
-        // tìm phần tử nhỏ nhất cho về đầu dãy
-        for(j = i+1;++countcmp && j < n; j++)
-        {
 
-            if(++countcmp && a[j] < a[j-1])
-            {
-                swapping(a[j], a[j-1]);
-            }
-        }
-        // giảm n
-        n--;
+	int Left = 0;
+	int Right = n - 1;
+	int k = 0;
+	while (++countcmp && Left < Right) // dieu kien de chay tiep
+	{
+	    // chon phan tu nho nhat ve dau day
+		for (int i = Left; ++countcmp && i < Right; i++)
+		{
+			if (++countcmp && a[i] > a[i + 1])
+			{
+				swap(a[i], a[i + 1]);
+				k = i;
+			}
+		}
 
-        // tìm phần tử lớn nhất cho về đầu dãy
-        for(k = n-1; ++countcmp && k > i; k--)
-        {
-            if(++countcmp && a[k] < a[k-1])
-            {
-                swapping(a[k], a[k-1]);
-            }
-        }
-        // tang i
-        i++;
-    }
+		Right = k;
+		// chon phan tu lon nhat ve dau day
+		for (int i = Right; ++countcmp && i > Left; i--)
+		{
+			if (++countcmp && a[i] < a[i - 1])
+			{
+				swap(a[i], a[i - 1]);
+				k = i;
+			}
+		}
+		Left = k;
+	}
 }
 /* source : https://www.tutorialspoint.com/cplusplus-program-to-implement-shell-sort */
 void shellSort(int a[], int n,unsigned long long &countcmp)
@@ -134,6 +136,31 @@ void shellSort(int a[], int n,unsigned long long &countcmp)
         }
     }
 }
+// A function implementing Shell sort.
+void ShellSort1(int a[], int n,unsigned long long &countcmp)
+{
+	int i, j, k, temp;
+	// Gap 'i' between index of the element to be compared, initially n/2.
+	for(i = n/2; ++countcmp && i > 0; i = i/2)
+	{
+		for(j = i; ++countcmp && j < n; j++)
+		{
+			for(k = j-i; ++countcmp && k >= 0; k = k-i)
+			{
+				// If value at higher index is greater, then break the loop.
+				if(++countcmp && a[k+i] >= a[k])
+				break;
+				// Switch the values otherwise.
+				else
+				{  ++countcmp ;
+					temp = a[k];
+					a[k] = a[k+i];
+					a[k+i] = temp;
+				}
+			}
+		}
+	}
+}
 string abc(int k )
 {
     if(k==0)
@@ -142,6 +169,12 @@ string abc(int k )
         return "Shaker Sort";
     else
         return "Shell Sort";
+}
+void printArr(int arr[],int n)
+{
+    for(int i = 0 ; i < n; i++)
+        cout << arr[i] << " ";
+    cout << endl;
 }
 void testing_sorted()
 {
@@ -155,7 +188,7 @@ void testing_sorted()
             string file_csv = data_order[i]+"_"+ to_string(data_size[j])+".txt";
             // cout << file_csv << endl;
             readInput(arr,n,file_csv.c_str());
-            for(int k = 0 ; k < 3 ; k++)
+            for(int k =  2; k < 3 ; k++)
             {
                 unsigned long long countcmp = 0 ;
                 string message = file_csv + " with algorithm " + abc(k);
@@ -170,7 +203,7 @@ void testing_sorted()
                 {
                     INIT_TIMER;
                     START_TIMER;
-                    ShakerSort(arr,n,countcmp);
+                    shakerSort1(arr,n,countcmp);
                     STOP_TIMER(message + " and countcmp: " + to_string(countcmp));
                 }
                 else
@@ -186,12 +219,7 @@ void testing_sorted()
     }
 
 }
-void printArr(int arr[],int n)
-{
-    for(int i = 0 ; i < n; i++)
-        cout << arr[i] << " ";
-    cout << endl;
-}
+
 int main()
 {
     ios::sync_with_stdio(false);
