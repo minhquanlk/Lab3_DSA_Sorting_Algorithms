@@ -97,7 +97,7 @@ void shakerSort1(int a[], int n,unsigned long long &countcmp)
 		}
 
 		Right = k;
-		// chon phan tu lon nhat ve dau day
+		// chon phan tu lon nhat ve cuoi day
 		for (int i = Right; ++countcmp && i > Left; i--)
 		{
 			if (++countcmp && a[i] < a[i - 1])
